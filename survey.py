@@ -125,8 +125,8 @@ with st.container():
     st.subheader("Section A: Basic Info & Strategic Alignment")
 
     #colA1, colA2 = st.columns(2)
-    role = text_input("What is your current role / department?")
-    user_count = text_input("How many users would use this solution?")
+    role = st.text_input("What is your current role / department?")
+    user_count = st.text_input("How many users would use this solution?")
 
     st.write("**Most important use cases (select all that apply):**")
     USE_CASES = [
