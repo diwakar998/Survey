@@ -107,11 +107,15 @@ st.markdown("""
     background-color: #ffffff;
     border: 2px solid #e0e6ed;
     border-radius: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
     padding: 25px;
     margin-top: 15px;
     margin-bottom: 25px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.05);
     max-width: 800px;   /* control size */
+    
 }
 </style>
 """, unsafe_allow_html=True)
