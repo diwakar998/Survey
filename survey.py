@@ -10,9 +10,9 @@ st.set_page_config(page_title="AI Agentic Framework Readiness Questionnaire", pa
 LIGHT_BG = """
 <style>
 /* soft light gradient background */
-.stApp {
-  background: radial-gradient(1200px 600px at 20% 0%, #ffffff 0%, #f7f9fc 70%, #eef3f8 100%);
-}
+#.stApp {
+#  background: radial-gradient(1200px 600px at 20% 0%, #ffffff 0%, #f7f9fc 70%, #eef3f8 100%);
+#}
 
 /* card look for main container */
 .block-container {
@@ -43,7 +43,7 @@ h1, h2, h3 {
 }
 </style>
 """
-st.markdown(LIGHT_BG, unsafe_allow_html=True)
+#st.markdown(LIGHT_BG, unsafe_allow_html=True)
 
 # ---------- Header with logos ----------
 c1, c2, c3 = st.columns([1, 2, 1])
@@ -211,8 +211,8 @@ st.markdown("</div>", unsafe_allow_html=True)
 # ---------- Helpful tip ----------
 with st.expander("🖼️ Image setup tips"):
     st.write("""
-- This app tries common paths for the logos:
-  - `./btlogo.png` and `./nttlogo.png` (same folder as `app.py`)
-  - `/mnt/data/btlogo.png` and `/mnt/data/nttlogo.png`
-- Place your logo files at either location or update the image paths near the top of the script.
-""")
+#- This app tries common paths for the logos:
+#  - `./btlogo.png` and `./nttlogo.png` (same folder as `app.py`)
+#  - `/mnt/data/btlogo.png` and `/mnt/data/nttlogo.png`
+#- Place your logo files at either location or update the image paths near the top of the script.
+#""")
