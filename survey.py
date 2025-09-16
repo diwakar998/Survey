@@ -114,7 +114,7 @@ st.markdown("""
     margin-top: 15px;
     margin-bottom: 25px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    max-width: 400px;   /* control size */
+    max-width: 600px;   /* control size */
     
 }
 </style>
@@ -125,7 +125,7 @@ st.markdown('<div class="form-card">', unsafe_allow_html=True)
 
 # ---------- Questionnaire ----------
 with st.container():
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    #st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("Section A: Basic Info & Strategic Alignment")
 
     #colA1, colA2 = st.columns(2)
