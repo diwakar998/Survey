@@ -201,9 +201,9 @@ with st.form("survey_form", clear_on_submit=True):
     st.markdown("</div>", unsafe_allow_html=True)
 
   # ---------- Submit ----------
-  st.markdown("<div class='card'>", unsafe_allow_html=True)
-  submit = st.button("📥 Submit Response", type="primary")
-  if submit:
+  #st.markdown("<div class='card'>", unsafe_allow_html=True)
+    submit = st.button("📥 Submit Response", type="primary")
+    if submit:
       timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
       record = {
@@ -245,7 +245,7 @@ with st.form("survey_form", clear_on_submit=True):
           save_response(record)
           st.success("Thanks! Your response has been saved to 'survey_responses.xlsx'.")
           st.dataframe(pd.DataFrame([record]))
-  st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------- Helpful tip ----------
 #with st.expander("🖼️ Image setup tips"):
