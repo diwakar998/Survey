@@ -76,7 +76,7 @@ with c3:
 #    st.image(new_image)
   
 
-st.markdown("<div class='hr'></div>", unsafe_allow_html=True)
+#st.markdown("<div class='hr'></div>", unsafe_allow_html=True)
 #st.title("AI Agentic Framework Readiness Questionnaire")
 #st.caption("Please provide as much detail as you can—this helps us tailor the Agentic AI approach for your needs.")
 
@@ -120,7 +120,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Use the styled card
-st.markdown('<div class="form-card">', unsafe_allow_html=True)
+#st.markdown('<div class="form-card">', unsafe_allow_html=True)
 
 # ---------- Questionnaire ----------
 with st.form("survey_form", clear_on_submit=True):
