@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import os
 import io
+import openpyxl
 from datetime import datetime
 
 st.set_page_config(page_title="Agentic AI Readiness — Quick Survey", page_icon="🤖", layout="centered")
