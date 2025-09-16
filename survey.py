@@ -99,14 +99,34 @@ def save_response(record: dict):
     with pd.ExcelWriter(OUTPUT_XLSX, engine="openpyxl", mode="w") as writer:
         df.to_excel(writer, index=False, sheet_name=SHEET)
 
+
+# Custom CSS
+st.markdown("""
+<style>
+.form-card {
+    background-color: #ffffff;
+    border: 2px solid #e0e6ed;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    max-width: 800px;   /* control size */
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Use the styled card
+st.markdown('<div class="form-card">', unsafe_allow_html=True)
+
 # ---------- Questionnaire ----------
 with st.container():
     st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("Section A: Basic Info & Strategic Alignment")
 
-    colA1, colA2 = st.columns(2)
-    role = colA1.text_input("What is your current role / department?")
-    user_count = colA2.text_input("How many users would use this solution?")
+    #colA1, colA2 = st.columns(2)
+    role = text_input("What is your current role / department?")
+    user_count = text_input("How many users would use this solution?")
 
     st.write("**Most important use cases (select all that apply):**")
     USE_CASES = [
