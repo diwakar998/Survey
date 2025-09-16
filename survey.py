@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import os
+from PIL import Image
+
 
 # ---------- Page config & light styling ----------
 st.set_page_config(page_title="AI Agentic Framework Readiness Questionnaire", page_icon="📝", layout="wide")
@@ -51,13 +53,24 @@ with c1:
     # Adjust paths as needed. If running here, these exist at /mnt/data/...
     for path in ["./btlogo.png", "./nttlogo.png", "/mnt/data/btlogo.png", "/mnt/data/nttlogo.png"]:
         if os.path.exists(path) and "btlogo" in path:
-            st.image(path, width=100)
+            image = Image.open(path)
+            new_image = image.resize((100, 100))
+            st.image(new_image, width=100)
             break
 with c3:
     for path in ["./nttlogo.png", "./btlogo.png", "/mnt/data/nttlogo.png", "/mnt/data/btlogo.png"]:
         if os.path.exists(path) and "nttlogo" in path:
-            st.image(path, width=100)
+            image = Image.open(path)
+            new_image = image.resize((100, 100))
+            st.image(new_image, width=100)
             break
+
+#bottom_image = st.file_uploader('', type='jpg', key=6)
+#if bottom_image is not None:
+#    image = Image.open(bottom_image)
+#    new_image = image.resize((600, 400))
+#    st.image(new_image)
+  
 
 st.markdown("<div class='hr'></div>", unsafe_allow_html=True)
 st.title("AI Agentic Framework Readiness Questionnaire")
