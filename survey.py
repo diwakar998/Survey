@@ -54,15 +54,15 @@ with c1:
     for path in ["./btlogo.png", "./nttlogo.png", "/mnt/data/btlogo.png", "/mnt/data/nttlogo.png"]:
         if os.path.exists(path) and "btlogo" in path:
             image = Image.open(path)
-            new_image = image.resize((100, 100))
-            st.image(new_image, width=100)
+            new_image = image.resize((180, 80))
+            st.image(new_image, width=180)
             break
 with c3:
     for path in ["./nttlogo.png", "./btlogo.png", "/mnt/data/nttlogo.png", "/mnt/data/btlogo.png"]:
         if os.path.exists(path) and "nttlogo" in path:
             image = Image.open(path)
-            new_image = image.resize((100, 100))
-            st.image(new_image, width=100)
+            new_image = image.resize((180, 80))
+            st.image(new_image, width=180)
             break
 
 #bottom_image = st.file_uploader('', type='jpg', key=6)
