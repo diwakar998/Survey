@@ -1,117 +1,218 @@
 # app.py
 import streamlit as st
 import pandas as pd
-import os
-import io
-import openpyxl
 from datetime import datetime
+import os
 
-st.set_page_config(page_title="Agentic AI Readiness — Quick Survey", page_icon="🤖", layout="centered")
+# ---------- Page config & light styling ----------
+st.set_page_config(page_title="AI Agentic Framework Readiness Questionnaire", page_icon="📝", layout="wide")
 
-EXCEL_PATH = "agentic_ai_responses.xlsx"  # file on the server where responses are persisted
+LIGHT_BG = """
+<style>
+/* soft light gradient background */
+.stApp {
+  background: radial-gradient(1200px 600px at 20% 0%, #ffffff 0%, #f7f9fc 70%, #eef3f8 100%);
+}
 
-# --- Header ---
-st.title("Agentic AI Readiness — Quick Survey")
-st.write("Two quick questions to sensecheck your team's AI familiarity and expectations. "
-         "This version saves responses to an Excel file on the server (and offers a download).")
+/* card look for main container */
+.block-container {
+  padding-top: 1.2rem;
+}
 
-# Use a form so the page doesn't auto-react to each widget change
-with st.form(key="agentic_ai_form_v2"):
-    st.header("Question 1 — Team familiarity with AI")
-    q1 = st.radio(
-        label="How familiar is your team with AI concepts and technologies?",
-        options=["Very familiar", "Somewhat familiar", "Limited familiarity", "Not familiar"],
-        index=1,
-        key="q1_familiarity_v2"
-    )
+/* section cards */
+.card {
+  background: #ffffffaa;
+  border: 1px solid #e9eef5;
+  border-radius: 18px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 22px rgba(16, 38, 73, 0.05);
+}
 
-    st.markdown("---")
-    st.header("Question 12 — Expectations from an Agentic AI framework")
-    st.write("Select all that apply (you can pick multiple):")
+/* headings */
+h1, h2, h3 {
+  font-weight: 700 !important;
+  letter-spacing: .2px;
+}
 
-    options_q12 = [
-        "Increased productivity",
-        "Better decision support",
-        "Enhanced collaboration and communication",
-        "Cost savings",
-        "Competitive advantage",
-        "Other (please specify)"
+/* subtle divider */
+.hr {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,0,0,0), #e7edf5 20%, #e7edf5 80%, rgba(0,0,0,0));
+  margin: .6rem 0 1.2rem 0;
+}
+</style>
+"""
+st.markdown(LIGHT_BG, unsafe_allow_html=True)
+
+# ---------- Header with logos ----------
+c1, c2, c3 = st.columns([1, 2, 1])
+with c1:
+    # Adjust paths as needed. If running here, these exist at /mnt/data/...
+    for path in ["./btlogo.png", "./nttlogo.png", "/mnt/data/btlogo.png", "/mnt/data/nttlogo.png"]:
+        if os.path.exists(path) and "btlogo" in path:
+            st.image(path, use_column_width=True)
+            break
+with c3:
+    for path in ["./nttlogo.png", "./btlogo.png", "/mnt/data/nttlogo.png", "/mnt/data/btlogo.png"]:
+        if os.path.exists(path) and "nttlogo" in path:
+            st.image(path, use_column_width=True)
+            break
+
+st.markdown("<div class='hr'></div>", unsafe_allow_html=True)
+st.title("AI Agentic Framework Readiness Questionnaire")
+st.caption("Please provide as much detail as you can—this helps us tailor the Agentic AI approach for your needs.")
+
+# ---------- Helper: save to Excel ----------
+OUTPUT_XLSX = "survey_responses.xlsx"
+SHEET = "Responses"
+
+def save_response(record: dict):
+    """Append a single record to an Excel sheet, creating it if needed."""
+    new_row = pd.DataFrame([record])
+    if os.path.exists(OUTPUT_XLSX):
+        try:
+            existing = pd.read_excel(OUTPUT_XLSX, sheet_name=SHEET)
+            df = pd.concat([existing, new_row], ignore_index=True)
+        except Exception:
+            # Fallback if sheet or file unreadable
+            df = new_row
+    else:
+        df = new_row
+    with pd.ExcelWriter(OUTPUT_XLSX, engine="openpyxl", mode="w") as writer:
+        df.to_excel(writer, index=False, sheet_name=SHEET)
+
+# ---------- Questionnaire ----------
+with st.container():
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.subheader("Section A: Basic Info & Strategic Alignment")
+
+    colA1, colA2 = st.columns(2)
+    role = colA1.text_input("What is your current role / department?")
+    user_count = colA2.text_input("How many users would use this solution?")
+
+    st.write("**Most important use cases (select all that apply):**")
+    USE_CASES = [
+        "1. Inventory update",
+        "2. RAID Registration",
+        "3. Central reporting and communication",
+        "4. Program / Project performance trend and prediction",
+        "5. ORT initiation",
+        "6. Delays in task completion",
+        "7. Inefficient resource allocation",
+        "8. Poor visibility into project progress",
+        "9. Communication gaps among stakeholders",
+        "10. Difficulty in forecasting risks",
+        "11. Manual reporting and documentation",
+        "12. Others (specify below)"
     ]
-    q12_selected = st.multiselect(
-        label="Expectations",
-        options=options_q12,
-        default=[],
-        key="q12_expectations_v2"
+    selected_use_cases = st.multiselect(" ", USE_CASES, placeholder="Select one or more")
+    other_use_case = st.text_input("If you chose 'Others', please specify:")
+    priority_order = st.text_input("Prioritize chosen use cases by number (e.g., 3,4,2):")
+
+    ai_implemented = st.radio("Do you have any existing use cases where AI or automation has been implemented?", ["No", "Yes"], horizontal=True)
+    ai_success_notes = st.text_area("If yes, how successful are they so far (what worked, what didn’t)?", disabled=(ai_implemented=="No"))
+
+    centralized_data = st.radio("Do you have centralized data repositories ('single source(s) of truth') that agents could access?", ["No", "Yes"], horizontal=True)
+    inhouse_expertise = st.radio("Do you have in-house expertise in AI/ML, data engineering, and/or agentic systems?", ["No", "Yes"], horizontal=True)
+
+    vision = st.text_area("What is your vision for AI/ML, data engineering, and/or agentic systems in short term and long term?")
+
+    expectations = st.multiselect(
+        "What are your expectations from implementing an Agentic AI framework?",
+        [
+            "Increased productivity (Lean PMO)",
+            "Better decision support",
+            "Enhanced collaboration and communication",
+            "Cost savings (Lean PM)",
+            "Competitive advantage",
+            "Project performance improvement",
+            "Other (specify below)"
+        ]
     )
+    expectations_other = st.text_input("If 'Other', please specify:")
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    other_text = ""
-    if "Other (please specify)" in q12_selected:
-        other_text = st.text_input(
-            label="Please specify other expectations",
-            placeholder="e.g. Reduce field ops truck rolls, improve SLA compliance...",
-            key="q12_other_text_v2"
-        )
+with st.container():
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.subheader("Section B: Infrastructure & AI Eco-System")
 
-    st.markdown("**Additional comments (optional):**")
-    comments = st.text_area("", key="q12_comments_v2", height=80, placeholder="Any extra context?")
+    hosting = st.selectbox("Where do you plan to host Agentic AI?", ["Select...", "On-premises", "Cloud", "Hybrid"])
+    cloud = st.selectbox("Preferred cloud provider", ["Select...", "Azure", "AWS", "GCP", "Private Cloud / Other"])
+    gpu = st.radio("Do you have GPU availability if required for AI workloads?", ["No", "Yes"], horizontal=True)
+    copilot_lic = st.radio("Any plan to purchase Copilot Studio licenses in near future?", ["No", "Yes", "Not sure"], horizontal=True)
 
-    submitted = st.form_submit_button(label="Submit responses")
+    tieups_llms = st.text_area("Do you have OpenAI/Copilot/other tie-ups allowing LLM API access for AI agents?")
+    third_party_llm = st.radio("Open to hosting any third-party free LLM (on-prem) in your environment?", ["No", "Yes"], horizontal=True)
+    third_party_llm_notes = st.text_area("If yes / any tie-ups, please explain:", disabled=(third_party_llm=="No"))
 
-# --- After submission: persist to Excel and show results ---
-if submitted:
-    timestamp = datetime.utcnow().isoformat(timespec="seconds") + "Z"
-    row = {
+    demo_vm = st.radio("For a demo AI Agent application—can we provision one Azure VM (with Python) in your secured cloud and get required data/shared folder access?", ["No", "Yes", "Needs approval"], horizontal=True)
+
+    third_party_licenses = st.text_area("Any plan soon for Agentic environments third-party license purchasing (e.g., AI Cloud Foundry or other)?")
+
+    policy_oss = st.text_area("Policy for third-party software approval & open-source license compliance (Streamlit, LangChain, LangGraph, MCP, Pandas, etc.)")
+
+    vectordb_available = st.radio("Do you currently have a licensed vector database available for AI agents?", ["No", "Yes"], horizontal=True)
+    vectordb_pref = st.text_input("If not, any preferred vector DB for RAG (e.g., Pinecone, Weaviate, Milvus)?")
+
+    devops_framework = st.text_area("Do you have an existing DevOps/ML Ops framework?")
+    monitoring_logging = st.text_area("How do you currently handle monitoring and logging?")
+    poc_maintenance = st.text_input("Who will be the point of contact for ongoing maintenance/support?")
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# ---------- Submit ----------
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+submit = st.button("📥 Submit Response", type="primary")
+if submit:
+    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+
+    record = {
         "timestamp_utc": timestamp,
-        "team_familiarity": q1,
-        "expectations_selected": "; ".join(q12_selected) if q12_selected else "",
-        "expectations_other_text": other_text or "",
-        "additional_comments": comments or ""
+        "role_department": role,
+        "user_count": user_count,
+        "use_cases_selected": "; ".join(selected_use_cases),
+        "use_cases_other": other_use_case,
+        "priority_order": priority_order,
+        "ai_implemented": ai_implemented,
+        "ai_success_notes": ai_success_notes,
+        "centralized_data_sources": centralized_data,
+        "inhouse_expertise": inhouse_expertise,
+        "vision": vision,
+        "expectations": "; ".join(expectations),
+        "expectations_other": expectations_other,
+        "hosting": hosting,
+        "cloud_provider": cloud,
+        "gpu_available": gpu,
+        "copilot_studio_plan": copilot_lic,
+        "llm_api_tieups": tieups_llms,
+        "third_party_onprem_llm": third_party_llm,
+        "third_party_onprem_llm_notes": third_party_llm_notes,
+        "demo_vm_possible": demo_vm,
+        "third_party_license_plans": third_party_licenses,
+        "policy_open_source": policy_oss,
+        "vector_db_available": vectordb_available,
+        "vector_db_preferred": vectordb_pref,
+        "devops_mlop_framework": devops_framework,
+        "monitoring_logging": monitoring_logging,
+        "maintenance_poc": poc_maintenance,
     }
 
-    df_new = pd.DataFrame([row])
+    # Basic validation (optional but helpful)
+    required_fields = [role, user_count]
+    if any(x is None or str(x).strip()=="" for x in required_fields):
+        st.error("Please complete Role/Department and Users fields before submitting.")
+    else:
+        save_response(record)
+        st.success("Thanks! Your response has been saved to 'survey_responses.xlsx'.")
+        st.dataframe(pd.DataFrame([record]))
+st.markdown("</div>", unsafe_allow_html=True)
 
-    # Persist: append to Excel (read existing, concat, write back)
-    try:
-        if os.path.exists(EXCEL_PATH):
-            # read existing sheet
-            df_existing = pd.read_excel(EXCEL_PATH)
-            df_all = pd.concat([df_existing, df_new], ignore_index=True)
-        else:
-            df_all = df_new
-
-        # write back (overwrites with combined df)
-        df_all.to_excel(EXCEL_PATH, index=False)
-        st.success("Thanks — response saved to Excel ✅")
-        st.write(f"Saved to server file: `{EXCEL_PATH}` (rows now: {len(df_all)})")
-
-        # Prepare in-memory Excel for download (so user gets the latest snapshot)
-        towrite = io.BytesIO()
-        with pd.ExcelWriter(towrite, engine="openpyxl") as writer:
-            df_all.to_excel(writer, index=False, sheet_name="responses")
-        towrite.seek(0)
-
-        filename = f"agentic_ai_responses_{timestamp.replace(':','-')}.xlsx"
-        st.download_button(
-            label="Download current responses as Excel",
-            data=towrite,
-            file_name=filename,
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            key="download_excel"
-        )
-
-        # Also show the submitted response summary
-        st.write("### Your submission")
-        st.write(f"**Team familiarity:** {row['team_familiarity']}")
-        st.write(f"**Expectations:** {row['expectations_selected']}")
-        if row["expectations_other_text"]:
-            st.write(f"**Other (details):** {row['expectations_other_text']}")
-        if row["additional_comments"]:
-            st.write(f"**Comments:** {row['additional_comments']}")
-
-    except Exception as e:
-        st.error(f"Could not save to Excel file due to: {e}")
-        st.info("If running this app on a multi-user/shared host, consider persisting to a DB, Google Sheet or cloud storage instead.")
-
-# Tip for production
-st.info("Tip: For multi-user apps or production usage, prefer a database, Google Sheets, S3, or Airtable to avoid file-locking and concurrency issues.")
-
+# ---------- Helpful tip ----------
+with st.expander("🖼️ Image setup tips"):
+    st.write("""
+- This app tries common paths for the logos:
+  - `./btlogo.png` and `./nttlogo.png` (same folder as `app.py`)
+  - `/mnt/data/btlogo.png` and `/mnt/data/nttlogo.png`
+- Place your logo files at either location or update the image paths near the top of the script.
+""")
