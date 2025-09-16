@@ -110,11 +110,11 @@ st.markdown("""
     margin-left: auto;
     margin-right: auto;
     width: 70%;
-    padding: 25px;
+    padding: 20px 30px;
     margin-top: 15px;
     margin-bottom: 25px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    max-width: 800px;   /* control size */
+    max-width: 400px;   /* control size */
     
 }
 </style>
