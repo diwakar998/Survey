@@ -122,7 +122,7 @@ st.markdown("""
 st.markdown('<div class="form-card">', unsafe_allow_html=True)
 
 # ---------- Questionnaire ----------
-with st.form():
+with st.form("survey_form", clear_on_submit=True):
     #st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("Section A: Basic Info & Strategic Alignment")
 
