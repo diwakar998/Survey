@@ -51,12 +51,12 @@ with c1:
     # Adjust paths as needed. If running here, these exist at /mnt/data/...
     for path in ["./btlogo.png", "./nttlogo.png", "/mnt/data/btlogo.png", "/mnt/data/nttlogo.png"]:
         if os.path.exists(path) and "btlogo" in path:
-            st.image(path, use_column_width=True)
+            st.image(path, use_container_width=True)
             break
 with c3:
     for path in ["./nttlogo.png", "./btlogo.png", "/mnt/data/nttlogo.png", "/mnt/data/btlogo.png"]:
         if os.path.exists(path) and "nttlogo" in path:
-            st.image(path, use_column_width=True)
+            st.image(path, use_container_width=True)
             break
 
 st.markdown("<div class='hr'></div>", unsafe_allow_html=True)
