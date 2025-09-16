@@ -202,7 +202,7 @@ with st.form("survey_form", clear_on_submit=True):
 
   # ---------- Submit ----------
   #st.markdown("<div class='card'>", unsafe_allow_html=True)
-    submit = st.button("📥 Submit Response", type="primary")
+    submit = st.form_submit_button("📥 Submit Response", type="primary")
     if submit:
       timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
