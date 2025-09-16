@@ -200,52 +200,52 @@ with st.form("survey_form", clear_on_submit=True):
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------- Submit ----------
-st.markdown("<div class='card'>", unsafe_allow_html=True)
-submit = st.button("📥 Submit Response", type="primary")
-if submit:
-    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+  # ---------- Submit ----------
+  st.markdown("<div class='card'>", unsafe_allow_html=True)
+  submit = st.button("📥 Submit Response", type="primary")
+  if submit:
+      timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    record = {
-        "timestamp_utc": timestamp,
-        "role_department": role,
-        "user_count": user_count,
-        "use_cases_selected": "; ".join(selected_use_cases),
-        "use_cases_other": other_use_case,
-        "priority_order": priority_order,
-        "ai_implemented": ai_implemented,
-        "ai_success_notes": ai_success_notes,
-        "centralized_data_sources": centralized_data,
-        "inhouse_expertise": inhouse_expertise,
-        "vision": vision,
-        "expectations": "; ".join(expectations),
-        "expectations_other": expectations_other,
-        "hosting": hosting,
-        "cloud_provider": cloud,
-        "gpu_available": gpu,
-        "copilot_studio_plan": copilot_lic,
-        "llm_api_tieups": tieups_llms,
-        "third_party_onprem_llm": third_party_llm,
-        "third_party_onprem_llm_notes": third_party_llm_notes,
-        "demo_vm_possible": demo_vm,
-        "third_party_license_plans": third_party_licenses,
-        "policy_open_source": policy_oss,
-        "vector_db_available": vectordb_available,
-        "vector_db_preferred": vectordb_pref,
-        "devops_mlop_framework": devops_framework,
-        "monitoring_logging": monitoring_logging,
-        "maintenance_poc": poc_maintenance,
-    }
+      record = {
+          "timestamp_utc": timestamp,
+          "role_department": role,
+          "user_count": user_count,
+          "use_cases_selected": "; ".join(selected_use_cases),
+          "use_cases_other": other_use_case,
+          "priority_order": priority_order,
+          "ai_implemented": ai_implemented,
+          "ai_success_notes": ai_success_notes,
+          "centralized_data_sources": centralized_data,
+          "inhouse_expertise": inhouse_expertise,
+          "vision": vision,
+          "expectations": "; ".join(expectations),
+          "expectations_other": expectations_other,
+          "hosting": hosting,
+          "cloud_provider": cloud,
+          "gpu_available": gpu,
+          "copilot_studio_plan": copilot_lic,
+          "llm_api_tieups": tieups_llms,
+          "third_party_onprem_llm": third_party_llm,
+          "third_party_onprem_llm_notes": third_party_llm_notes,
+          "demo_vm_possible": demo_vm,
+          "third_party_license_plans": third_party_licenses,
+          "policy_open_source": policy_oss,
+          "vector_db_available": vectordb_available,
+          "vector_db_preferred": vectordb_pref,
+          "devops_mlop_framework": devops_framework,
+          "monitoring_logging": monitoring_logging,
+          "maintenance_poc": poc_maintenance,
+      }
 
-    # Basic validation (optional but helpful)
-    required_fields = [role, user_count]
-    if any(x is None or str(x).strip()=="" for x in required_fields):
-        st.error("Please complete Role/Department and Users fields before submitting.")
-    else:
-        save_response(record)
-        st.success("Thanks! Your response has been saved to 'survey_responses.xlsx'.")
-        st.dataframe(pd.DataFrame([record]))
-st.markdown("</div>", unsafe_allow_html=True)
+      # Basic validation (optional but helpful)
+      required_fields = [role, user_count]
+      if any(x is None or str(x).strip()=="" for x in required_fields):
+          st.error("Please complete Role/Department and Users fields before submitting.")
+      else:
+          save_response(record)
+          st.success("Thanks! Your response has been saved to 'survey_responses.xlsx'.")
+          st.dataframe(pd.DataFrame([record]))
+  st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------- Helpful tip ----------
 #with st.expander("🖼️ Image setup tips"):
