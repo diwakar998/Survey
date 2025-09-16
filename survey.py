@@ -5,7 +5,6 @@ from datetime import datetime
 import os
 from PIL import Image
 
-
 # ---------- Page config & light styling ----------
 st.set_page_config(page_title="AI Agentic Framework Readiness Questionnaire", page_icon="📝", layout="wide")
 
@@ -99,12 +98,11 @@ def save_response(record: dict):
     with pd.ExcelWriter(OUTPUT_XLSX, engine="openpyxl", mode="w") as writer:
         df.to_excel(writer, index=False, sheet_name=SHEET)
 
-
 # Custom CSS
 st.markdown("""
 <style>
 .form-card {
-    background-color: #ffffff;
+    background-color: #3f6fde;
     border: 2px solid #e0e6ed;
     border-radius: 15px;
     margin-left: auto;
@@ -124,7 +122,7 @@ st.markdown("""
 st.markdown('<div class="form-card">', unsafe_allow_html=True)
 
 # ---------- Questionnaire ----------
-with st.container():
+with st.form():
     #st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("Section A: Basic Info & Strategic Alignment")
 
@@ -174,7 +172,7 @@ with st.container():
     expectations_other = st.text_input("If 'Other', please specify:")
     st.markdown("</div>", unsafe_allow_html=True)
 
-with st.container():
+#with st.form():
     st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("Section B: Infrastructure & AI Eco-System")
 
@@ -250,8 +248,8 @@ if submit:
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------- Helpful tip ----------
-with st.expander("🖼️ Image setup tips"):
-    st.write("""
+#with st.expander("🖼️ Image setup tips"):
+#    st.write("""
 #- This app tries common paths for the logos:
 #  - `./btlogo.png` and `./nttlogo.png` (same folder as `app.py`)
 #  - `/mnt/data/btlogo.png` and `/mnt/data/nttlogo.png`
