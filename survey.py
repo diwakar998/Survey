@@ -58,7 +58,7 @@ with c1:
             st.image(new_image, width=180)
             break
 with c2:
-    st.title("AI Agentic Framework Readiness Questionnaire")
+    st.subheader("AI Agentic Framework Readiness Questionnaire")
     st.caption("Please provide as much detail as you can—this helps us tailor the Agentic AI approach for your needs.")
            
 with c3:
@@ -113,7 +113,7 @@ st.markdown("""
     margin-top: 15px;
     margin-bottom: 25px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    max-width: 600px;   /* control size */
+    max-width: 700px;   /* control size */
     
 }
 </style>
