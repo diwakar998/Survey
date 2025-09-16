@@ -60,7 +60,7 @@ with c1:
 with c2:
     st.title("AI Agentic Framework Readiness Questionnaire")
     st.caption("Please provide as much detail as you can—this helps us tailor the Agentic AI approach for your needs.")
-    break          
+           
 with c3:
     for path in ["./nttlogo.png", "./btlogo.png", "/mnt/data/nttlogo.png", "/mnt/data/btlogo.png"]:
         if os.path.exists(path) and "nttlogo" in path:
