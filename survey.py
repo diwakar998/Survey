@@ -58,7 +58,7 @@ with c1:
             st.image(new_image, width=180)
             break
 with c2:
-    st.subheader("AI Agentic Framework Readiness Questionnaire")
+    st.subheader("Agentic AI Framework Readiness Questionnaire")
     st.caption("Please provide as much detail as you can—this helps us tailor the Agentic AI approach for your needs.")
            
 with c3:
