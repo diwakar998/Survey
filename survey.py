@@ -7,7 +7,7 @@ from PIL import Image
 
 #st.set_page_config(layout="")
 # ---------- Page config & light styling ----------
-st.set_page_config(page_title="AI Agentic Framework Readiness Questionnaire", page_icon="📝", layout="centered")
+st.set_page_config(page_title="Agentic AI Framework Readiness Questionnaire", page_icon="📝", layout="centered")
 
 LIGHT_BG = """
 <style>
