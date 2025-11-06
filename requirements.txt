@@ -1,5 +1,0 @@
-streamlit
-pandas
-datetime
-openpyxl
-Pillow
